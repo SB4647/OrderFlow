@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0.401 AS build
 WORKDIR /src
 COPY . .
 RUN dotnet publish src/Services/Orders/OrderFlow.Orders.Api/OrderFlow.Orders.Api.csproj -c Release -o /app/publish /p:UseAppHost=false
