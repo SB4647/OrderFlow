@@ -1,0 +1,225 @@
+.dashboard {
+  width: min(1100px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 3.5rem 0;
+}
+
+.page-header,
+.orders-heading,
+.item-fields {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.page-header,
+.orders-heading {
+  align-items: end;
+  justify-content: space-between;
+}
+
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.35rem;
+  color: #52616b;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 0.4rem;
+  color: #132a3a;
+  font-size: clamp(2.5rem, 6vw, 4.25rem);
+  line-height: 1;
+}
+
+h2 {
+  margin-bottom: 0;
+  color: #132a3a;
+  font-size: 1.4rem;
+}
+
+.intro,
+.threshold-note,
+.empty-state {
+  color: #52616b;
+}
+
+.intro {
+  margin-bottom: 0;
+}
+
+.panel {
+  margin-bottom: 1.5rem;
+  padding: 1.75rem;
+  background: #ffffff;
+  border: 1px solid #d9e2e8;
+  border-radius: 0.75rem;
+  box-shadow: 0 0.5rem 1.5rem rgba(19, 42, 58, 0.06);
+}
+
+.section-heading {
+  margin-bottom: 1.5rem;
+}
+
+form,
+label {
+  display: grid;
+  gap: 0.45rem;
+}
+
+label {
+  color: #223847;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+input {
+  min-width: 0;
+  padding: 0.7rem 0.8rem;
+  color: #132a3a;
+  font: inherit;
+  font-weight: 400;
+  background: #ffffff;
+  border: 1px solid #afbdc7;
+  border-radius: 0.4rem;
+}
+
+input:focus {
+  border-color: #087e8b;
+  outline: 3px solid rgba(8, 126, 139, 0.18);
+}
+
+.item-fields {
+  margin: 1.1rem 0 1.4rem;
+}
+
+.item-fields label:first-child {
+  flex: 2;
+}
+
+.item-fields label:not(:first-child) {
+  flex: 1;
+}
+
+button {
+  padding: 0.7rem 1rem;
+  font: inherit;
+  font-weight: 700;
+  border: 0;
+  border-radius: 0.4rem;
+  cursor: pointer;
+}
+
+button:focus-visible {
+  outline: 3px solid #f4a261;
+  outline-offset: 2px;
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.primary-button {
+  justify-self: start;
+  color: #ffffff;
+  background: #087e8b;
+}
+
+.secondary-button {
+  color: #075863;
+  background: #d8f1f2;
+}
+
+.orders-table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+th,
+td {
+  padding: 0.9rem 0.65rem;
+  border-bottom: 1px solid #e4eaee;
+}
+
+th {
+  color: #52616b;
+  font-size: 0.76rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+td {
+  color: #223847;
+}
+
+.status {
+  display: inline-flex;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.status-pending {
+  color: #7a4b00;
+  background: #fff0c2;
+}
+
+.status-confirmed {
+  color: #176638;
+  background: #d9f6e4;
+}
+
+.status-cancelled {
+  color: #9d2525;
+  background: #fde0e0;
+}
+
+.error-message {
+  padding: 0.8rem 1rem;
+  color: #9d2525;
+  background: #fde0e0;
+  border-radius: 0.4rem;
+}
+
+.empty-state {
+  margin-bottom: 0;
+}
+
+@media (max-width: 700px) {
+  .dashboard {
+    padding: 1.5rem 0;
+  }
+
+  .page-header,
+  .orders-heading,
+  .item-fields {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .page-header {
+    align-items: start;
+  }
+
+  .panel {
+    padding: 1.25rem;
+  }
+}
