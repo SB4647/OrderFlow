@@ -21,7 +21,12 @@ public sealed class OrdersService(
         var items = command.Items
             .Select(item => OrderItem.Create(orderId, item.Sku, item.Quantity, item.UnitPrice))
             .ToArray();
-        var order = Order.Create(orderId, command.CustomerName, items, DateTimeOffset.UtcNow);
+        var order = Order.Create(
+            orderId,
+            command.CreatedByUserId,
+            command.CustomerName,
+            items,
+            DateTimeOffset.UtcNow);
 
         ordersRepository.Add(order);
         await ordersRepository.SaveChangesAsync(cancellationToken);
@@ -37,13 +42,21 @@ public sealed class OrdersService(
         return Map(order);
     }
 
-    public async Task<OrderResponse?> GetByIdAsync(Guid orderId, CancellationToken cancellationToken)
+    public async Task<OrderResponse?> GetByIdAsync(
+        Guid orderId,
+        OrderAccessScope accessScope,
+        CancellationToken cancellationToken)
     {
         var order = await ordersRepository.GetByIdAsync(orderId, cancellationToken);
-        return order is null ? null : Map(order);
+        return order is null || (!accessScope.CanViewAllOrders && order.CreatedByUserId != accessScope.UserId)
+            ? null
+            : Map(order);
     }
 
-    public async Task<IReadOnlyList<OrderResponse>> GetRecentAsync(int take, CancellationToken cancellationToken)
+    public async Task<IReadOnlyList<OrderResponse>> GetRecentAsync(
+        int take,
+        OrderAccessScope accessScope,
+        CancellationToken cancellationToken)
     {
         if (take is < 1 or > 100)
         {
@@ -53,7 +66,10 @@ public sealed class OrdersService(
             });
         }
 
-        var orders = await ordersRepository.GetRecentAsync(take, cancellationToken);
+        var orders = await ordersRepository.GetRecentAsync(
+            take,
+            accessScope.CanViewAllOrders ? null : accessScope.UserId,
+            cancellationToken);
         return orders.Select(Map).ToArray();
     }
 

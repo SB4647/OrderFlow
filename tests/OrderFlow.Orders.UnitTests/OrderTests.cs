@@ -10,6 +10,7 @@ public sealed class OrderTests
         var orderId = Guid.NewGuid();
         var order = Order.Create(
             orderId,
+            Guid.NewGuid(),
             "Demo Customer",
             [OrderItem.Create(orderId, "KB-001", 1, 99.00m)],
             DateTimeOffset.UtcNow);
@@ -22,7 +23,7 @@ public sealed class OrderTests
     public void Create_RejectsEmptyOrder()
     {
         var exception = Assert.Throws<OrderValidationException>(() =>
-            Order.Create(Guid.NewGuid(), "Demo Customer", [], DateTimeOffset.UtcNow));
+            Order.Create(Guid.NewGuid(), Guid.NewGuid(), "Demo Customer", [], DateTimeOffset.UtcNow));
 
         Assert.Contains("items", exception.Errors.Keys);
     }
@@ -61,6 +62,7 @@ public sealed class OrderTests
         var orderId = Guid.NewGuid();
         return Order.Create(
             orderId,
+            Guid.NewGuid(),
             "Demo Customer",
             [OrderItem.Create(orderId, "KB-001", 1, 99.00m)],
             DateTimeOffset.UtcNow);

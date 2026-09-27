@@ -10,7 +10,9 @@ internal sealed class OrderConfiguration : IEntityTypeConfiguration<Order>
     {
         builder.ToTable("orders");
         builder.HasKey(order => order.Id);
+        builder.HasIndex(order => order.CreatedByUserId);
 
+        builder.Property(order => order.CreatedByUserId).IsRequired();
         builder.Property(order => order.CustomerName)
             .HasMaxLength(200)
             .IsRequired();

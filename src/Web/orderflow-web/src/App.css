@@ -4,6 +4,62 @@
   padding: 3.5rem 0;
 }
 
+.auth-page {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 1rem;
+}
+
+.auth-panel {
+  width: min(100%, 28rem);
+}
+
+.auth-panel h2 {
+  margin-top: 1.5rem;
+}
+
+.auth-panel form {
+  margin-top: 1.5rem;
+}
+
+.password-help,
+.auth-switch {
+  margin-bottom: 0;
+  color: #52616b;
+  font-size: 0.9rem;
+}
+
+.auth-switch {
+  margin-top: 1.5rem;
+}
+
+.link-button {
+  padding: 0;
+  color: #075863;
+  background: transparent;
+  text-decoration: underline;
+}
+
+.account-actions {
+  display: flex;
+  gap: 0.65rem;
+  align-items: center;
+  justify-content: end;
+  flex-wrap: wrap;
+}
+
+.current-user {
+  display: grid;
+  margin: 0;
+  color: #223847;
+  font-size: 0.85rem;
+}
+
+.current-user span {
+  color: #52616b;
+}
+
 .page-header,
 .orders-heading,
 .item-fields {
@@ -210,7 +266,8 @@ td {
 
   .page-header,
   .orders-heading,
-  .item-fields {
+  .item-fields,
+  .account-actions {
     align-items: stretch;
     flex-direction: column;
   }

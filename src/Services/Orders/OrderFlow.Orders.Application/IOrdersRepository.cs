@@ -8,7 +8,10 @@ public interface IOrdersRepository
 
     Task<Order?> GetByIdAsync(Guid orderId, CancellationToken cancellationToken);
 
-    Task<IReadOnlyList<Order>> GetRecentAsync(int take, CancellationToken cancellationToken);
+    Task<IReadOnlyList<Order>> GetRecentAsync(
+        int take,
+        Guid? createdByUserId,
+        CancellationToken cancellationToken);
 
     Task<bool> IsMessageProcessedAsync(Guid messageId, CancellationToken cancellationToken);
 

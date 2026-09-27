@@ -13,13 +13,24 @@ public sealed class EfOrdersRepository(OrdersDbContext dbContext) : IOrdersRepos
             .Include(order => order.Items)
             .SingleOrDefaultAsync(order => order.Id == orderId, cancellationToken);
 
-    public async Task<IReadOnlyList<Order>> GetRecentAsync(int take, CancellationToken cancellationToken) =>
-        await dbContext.Orders
+    public async Task<IReadOnlyList<Order>> GetRecentAsync(
+        int take,
+        Guid? createdByUserId,
+        CancellationToken cancellationToken)
+    {
+        var orders = dbContext.Orders
             .AsNoTracking()
             .Include(order => order.Items)
             .OrderByDescending(order => order.CreatedAtUtc)
-            .Take(take)
-            .ToListAsync(cancellationToken);
+            .AsQueryable();
+
+        if (createdByUserId is not null)
+        {
+            orders = orders.Where(order => order.CreatedByUserId == createdByUserId);
+        }
+
+        return await orders.Take(take).ToListAsync(cancellationToken);
+    }
 
     public Task<bool> IsMessageProcessedAsync(Guid messageId, CancellationToken cancellationToken) =>
         dbContext.ProcessedMessages.AnyAsync(message => message.MessageId == messageId, cancellationToken);

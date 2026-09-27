@@ -41,6 +41,7 @@ public sealed class PaymentResultProcessingTests
         var orderId = Guid.NewGuid();
         return Order.Create(
             orderId,
+            Guid.NewGuid(),
             "Demo Customer",
             [OrderItem.Create(orderId, "KB-001", 1, 99.00m)],
             DateTimeOffset.UtcNow);
@@ -59,7 +60,10 @@ public sealed class PaymentResultProcessingTests
         public Task<Order?> GetByIdAsync(Guid orderId, CancellationToken cancellationToken) =>
             Task.FromResult(order.Id == orderId ? order : null);
 
-        public Task<IReadOnlyList<Order>> GetRecentAsync(int take, CancellationToken cancellationToken) =>
+        public Task<IReadOnlyList<Order>> GetRecentAsync(
+            int take,
+            Guid? createdByUserId,
+            CancellationToken cancellationToken) =>
             Task.FromResult<IReadOnlyList<Order>>([order]);
 
         public Task<bool> IsMessageProcessedAsync(Guid messageId, CancellationToken cancellationToken) =>

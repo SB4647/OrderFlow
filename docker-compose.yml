@@ -42,6 +42,7 @@ services:
       RabbitMq__Host: rabbitmq
       RabbitMq__Username: ${RABBITMQ_USER}
       RabbitMq__Password: ${RABBITMQ_PASSWORD}
+      Jwt__Key: ${JWT_KEY:?Set JWT_KEY in .env}
     ports:
       - "8081:8080"
     depends_on:

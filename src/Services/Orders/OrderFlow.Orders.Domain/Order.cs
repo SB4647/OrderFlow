@@ -8,9 +8,15 @@ public sealed class Order
     {
     }
 
-    private Order(Guid id, string customerName, IReadOnlyCollection<OrderItem> items, DateTimeOffset createdAtUtc)
+    private Order(
+        Guid id,
+        Guid createdByUserId,
+        string customerName,
+        IReadOnlyCollection<OrderItem> items,
+        DateTimeOffset createdAtUtc)
     {
         Id = id;
+        CreatedByUserId = createdByUserId;
         CustomerName = customerName;
         _items.AddRange(items);
         CreatedAtUtc = createdAtUtc;
@@ -18,6 +24,8 @@ public sealed class Order
     }
 
     public Guid Id { get; private set; }
+
+    public Guid CreatedByUserId { get; private set; }
 
     public string CustomerName { get; private set; } = string.Empty;
 
@@ -29,7 +37,12 @@ public sealed class Order
 
     public decimal Total => _items.Sum(item => item.Quantity * item.UnitPrice);
 
-    public static Order Create(Guid id, string customerName, IReadOnlyCollection<OrderItem>? items, DateTimeOffset createdAtUtc)
+    public static Order Create(
+        Guid id,
+        Guid createdByUserId,
+        string customerName,
+        IReadOnlyCollection<OrderItem>? items,
+        DateTimeOffset createdAtUtc)
     {
         var errors = new Dictionary<string, string[]>();
 
@@ -52,7 +65,7 @@ public sealed class Order
             throw new OrderValidationException(errors);
         }
 
-        return new Order(id, customerName.Trim(), items!, createdAtUtc);
+        return new Order(id, createdByUserId, customerName.Trim(), items!, createdAtUtc);
     }
 
     public void Confirm()

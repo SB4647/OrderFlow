@@ -24,7 +24,7 @@ Prerequisites: .NET 10 SDK, Node.js 24+, and Docker Desktop with the Linux engin
    Copy-Item .env.example .env
    ```
 
-   Set non-production values for `POSTGRES_PASSWORD` and `RABBITMQ_PASSWORD` in `.env`.
+   Set non-production values for `POSTGRES_PASSWORD`, `RABBITMQ_PASSWORD`, and a 32-character-or-longer `JWT_KEY` in `.env`. Do not commit this file.
 
 2. Start the complete application:
 
@@ -32,7 +32,7 @@ Prerequisites: .NET 10 SDK, Node.js 24+, and Docker Desktop with the Linux engin
    docker compose up --build
    ```
 
-   Open `http://localhost:8080`. Nginx serves the React dashboard and proxies its `/api` requests to Orders. RabbitMQ management is available at `http://localhost:15672`; the Orders API is exposed for diagnostics at `http://localhost:8081`.
+   Open `http://localhost:8080`, register a customer account, then create an order. Nginx serves the React dashboard and proxies its `/api` requests to Orders. RabbitMQ management is available at `http://localhost:15672`; the Orders API is exposed for diagnostics at `http://localhost:8081`.
 
 3. For Vite development instead of the production web container:
 
@@ -63,7 +63,10 @@ npm run build
 
 ## API
 
-- `POST /api/orders` creates an order.
-- `GET /api/orders/{id}` retrieves an order.
-- `GET /api/orders?take=20` lists recent orders.
+- `POST /api/auth/register` registers a Customer and returns a JWT.
+- `POST /api/auth/login` returns a JWT for valid credentials.
+- `GET /api/auth/me` returns the authenticated user.
+- `POST /api/orders` creates an order for the authenticated Customer.
+- `GET /api/orders/{id}` retrieves the caller's order; Admins can retrieve any order.
+- `GET /api/orders?take=20` lists the caller's orders; Admins receive all orders.
 - `GET /health` reports Orders API health.
