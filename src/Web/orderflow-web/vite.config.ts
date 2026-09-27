@@ -1,13 +1,14 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
-// https://vite.dev/config/
+const ordersApiProxyTarget = process.env.VITE_ORDERS_API_PROXY_TARGET ?? 'http://orders-api:8080'
+
 export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:8080',
+        target: ordersApiProxyTarget,
         changeOrigin: true,
       },
     },

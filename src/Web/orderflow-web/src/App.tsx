@@ -31,7 +31,7 @@ const initialForm: OrderForm = {
   unitPrice: '99.00',
 }
 
-const apiBaseUrl = import.meta.env.VITE_ORDERS_API_URL ?? '/api'
+const apiBaseUrl = '/api'
 
 function App() {
   const [form, setForm] = useState<OrderForm>(initialForm)

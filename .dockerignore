@@ -6,3 +6,5 @@ AGENTS.md
 docs/BUILD_BRIEF.md
 **/bin
 **/obj
+**/node_modules
+**/dist
