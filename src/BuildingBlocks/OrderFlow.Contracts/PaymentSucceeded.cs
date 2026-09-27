@@ -1,7 +1,6 @@
 namespace OrderFlow.Contracts;
 
-public sealed record InventoryReserved(
+public sealed record PaymentSucceeded(
     Guid MessageId,
     DateTimeOffset OccurredAtUtc,
-    Guid OrderId,
-    decimal Total);
+    Guid OrderId);

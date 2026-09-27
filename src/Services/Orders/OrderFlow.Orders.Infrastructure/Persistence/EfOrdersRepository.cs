@@ -21,6 +21,16 @@ public sealed class EfOrdersRepository(OrdersDbContext dbContext) : IOrdersRepos
             .Take(take)
             .ToListAsync(cancellationToken);
 
+    public Task<bool> IsMessageProcessedAsync(Guid messageId, CancellationToken cancellationToken) =>
+        dbContext.ProcessedMessages.AnyAsync(message => message.MessageId == messageId, cancellationToken);
+
+    public void MarkMessageProcessed(Guid messageId, DateTimeOffset processedAtUtc) =>
+        dbContext.ProcessedMessages.Add(new ProcessedMessage
+        {
+            MessageId = messageId,
+            ProcessedAtUtc = processedAtUtc
+        });
+
     public async Task SaveChangesAsync(CancellationToken cancellationToken)
     {
         await dbContext.SaveChangesAsync(cancellationToken);

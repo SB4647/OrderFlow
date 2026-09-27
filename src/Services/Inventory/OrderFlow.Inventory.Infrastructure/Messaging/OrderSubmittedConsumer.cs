@@ -19,7 +19,11 @@ public sealed class OrderSubmittedConsumer(
         if (result.IsReserved)
         {
             await publishEndpoint.Publish(
-                new InventoryReserved(Guid.NewGuid(), DateTimeOffset.UtcNow, context.Message.OrderId),
+                new InventoryReserved(
+                    Guid.NewGuid(),
+                    DateTimeOffset.UtcNow,
+                    context.Message.OrderId,
+                    context.Message.Total),
                 context.CancellationToken);
             return;
         }

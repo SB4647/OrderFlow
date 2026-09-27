@@ -26,5 +26,6 @@
     <Project Path="tests/OrderFlow.Inventory.UnitTests/OrderFlow.Inventory.UnitTests.csproj" />
     <Project Path="tests/OrderFlow.Orders.IntegrationTests/OrderFlow.Orders.IntegrationTests.csproj" />
     <Project Path="tests/OrderFlow.Orders.UnitTests/OrderFlow.Orders.UnitTests.csproj" />
+    <Project Path="tests/OrderFlow.Payments.UnitTests/OrderFlow.Payments.UnitTests.csproj" />
   </Folder>
 </Solution>

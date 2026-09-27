@@ -69,7 +69,14 @@ services:
     build:
       context: .
       dockerfile: src/Services/Payments/OrderFlow.Payments.Worker/Dockerfile
+    environment:
+      ConnectionStrings__Payments: Host=postgres;Port=5432;Database=orderflow_payments;Username=${POSTGRES_USER:-orderflow};Password=${POSTGRES_PASSWORD}
+      RabbitMq__Host: rabbitmq
+      RabbitMq__Username: ${RABBITMQ_USER}
+      RabbitMq__Password: ${RABBITMQ_PASSWORD}
     depends_on:
+      postgres:
+        condition: service_healthy
       rabbitmq:
         condition: service_healthy
 

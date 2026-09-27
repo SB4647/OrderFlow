@@ -27,13 +27,16 @@ else
 
     builder.Services.AddMassTransit(configuration =>
     {
-        configuration.UsingRabbitMq((_, busConfiguration) =>
+        configuration.AddConsumer<PaymentSucceededConsumer>();
+        configuration.AddConsumer<PaymentFailedConsumer>();
+        configuration.UsingRabbitMq((context, busConfiguration) =>
         {
             busConfiguration.Host(rabbitMqHost, "/", hostConfiguration =>
             {
                 hostConfiguration.Username(rabbitMqUsername);
                 hostConfiguration.Password(rabbitMqPassword);
             });
+            busConfiguration.ConfigureEndpoints(context);
         });
     });
     builder.Services.AddScoped<IOrderSubmittedPublisher, MassTransitOrderSubmittedPublisher>();

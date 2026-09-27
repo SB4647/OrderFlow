@@ -10,5 +10,9 @@ public interface IOrdersRepository
 
     Task<IReadOnlyList<Order>> GetRecentAsync(int take, CancellationToken cancellationToken);
 
+    Task<bool> IsMessageProcessedAsync(Guid messageId, CancellationToken cancellationToken);
+
+    void MarkMessageProcessed(Guid messageId, DateTimeOffset processedAtUtc);
+
     Task SaveChangesAsync(CancellationToken cancellationToken);
 }

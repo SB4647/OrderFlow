@@ -30,6 +30,7 @@ public sealed class OrdersService(
                 Guid.NewGuid(),
                 DateTimeOffset.UtcNow,
                 order.Id,
+                order.Total,
                 order.Items.Select(item => new OrderLine(item.Sku, item.Quantity)).ToArray()),
             cancellationToken);
 
@@ -54,6 +55,51 @@ public sealed class OrdersService(
 
         var orders = await ordersRepository.GetRecentAsync(take, cancellationToken);
         return orders.Select(Map).ToArray();
+    }
+
+    public Task ProcessPaymentSucceededAsync(
+        PaymentSucceeded paymentSucceeded,
+        CancellationToken cancellationToken) =>
+        ApplyPaymentResultAsync(
+            paymentSucceeded.MessageId,
+            paymentSucceeded.OrderId,
+            succeeded: true,
+            cancellationToken);
+
+    public Task ProcessPaymentFailedAsync(
+        PaymentFailed paymentFailed,
+        CancellationToken cancellationToken) =>
+        ApplyPaymentResultAsync(
+            paymentFailed.MessageId,
+            paymentFailed.OrderId,
+            succeeded: false,
+            cancellationToken);
+
+    private async Task ApplyPaymentResultAsync(
+        Guid messageId,
+        Guid orderId,
+        bool succeeded,
+        CancellationToken cancellationToken)
+    {
+        if (await ordersRepository.IsMessageProcessedAsync(messageId, cancellationToken))
+        {
+            return;
+        }
+
+        var order = await ordersRepository.GetByIdAsync(orderId, cancellationToken)
+            ?? throw new InvalidOperationException($"Order '{orderId}' was not found for payment processing.");
+
+        if (succeeded)
+        {
+            order.Confirm();
+        }
+        else
+        {
+            order.Cancel();
+        }
+
+        ordersRepository.MarkMessageProcessed(messageId, DateTimeOffset.UtcNow);
+        await ordersRepository.SaveChangesAsync(cancellationToken);
     }
 
     private static OrderResponse Map(Order order) => new(

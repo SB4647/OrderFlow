@@ -37,7 +37,7 @@ public sealed class InventoryServiceTests
     }
 
     private static OrderSubmitted CreateOrderSubmitted(Guid messageId, int quantity) =>
-        new(messageId, DateTimeOffset.UtcNow, Guid.NewGuid(), [new OrderLine("KB-001", quantity)]);
+        new(messageId, DateTimeOffset.UtcNow, Guid.NewGuid(), 99.00m, [new OrderLine("KB-001", quantity)]);
 
     private sealed class FakeInventoryRepository(StockItem stockItem) : IInventoryRepository
     {
