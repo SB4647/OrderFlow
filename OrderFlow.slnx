@@ -1,0 +1,29 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/BuildingBlocks/">
+    <Project Path="src/BuildingBlocks/OrderFlow.Contracts/OrderFlow.Contracts.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/" />
+  <Folder Name="/src/Services/Inventory/">
+    <Project Path="src/Services/Inventory/OrderFlow.Inventory.Application/OrderFlow.Inventory.Application.csproj" />
+    <Project Path="src/Services/Inventory/OrderFlow.Inventory.Domain/OrderFlow.Inventory.Domain.csproj" />
+    <Project Path="src/Services/Inventory/OrderFlow.Inventory.Infrastructure/OrderFlow.Inventory.Infrastructure.csproj" />
+    <Project Path="src/Services/Inventory/OrderFlow.Inventory.Worker/OrderFlow.Inventory.Worker.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/Orders/">
+    <Project Path="src/Services/Orders/OrderFlow.Orders.Api/OrderFlow.Orders.Api.csproj" />
+    <Project Path="src/Services/Orders/OrderFlow.Orders.Application/OrderFlow.Orders.Application.csproj" />
+    <Project Path="src/Services/Orders/OrderFlow.Orders.Domain/OrderFlow.Orders.Domain.csproj" />
+    <Project Path="src/Services/Orders/OrderFlow.Orders.Infrastructure/OrderFlow.Orders.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/Payments/">
+    <Project Path="src/Services/Payments/OrderFlow.Payments.Application/OrderFlow.Payments.Application.csproj" />
+    <Project Path="src/Services/Payments/OrderFlow.Payments.Domain/OrderFlow.Payments.Domain.csproj" />
+    <Project Path="src/Services/Payments/OrderFlow.Payments.Infrastructure/OrderFlow.Payments.Infrastructure.csproj" />
+    <Project Path="src/Services/Payments/OrderFlow.Payments.Worker/OrderFlow.Payments.Worker.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/OrderFlow.Orders.IntegrationTests/OrderFlow.Orders.IntegrationTests.csproj" />
+    <Project Path="tests/OrderFlow.Orders.UnitTests/OrderFlow.Orders.UnitTests.csproj" />
+  </Folder>
+</Solution>

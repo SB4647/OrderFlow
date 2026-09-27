@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-OrderFlow.Payments.Worker-67fdb8bd-3c33-4f93-ad6e-937836389b14</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.12" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OrderFlow.Payments.Application\OrderFlow.Payments.Application.csproj" />
+    <ProjectReference Include="..\OrderFlow.Payments.Infrastructure\OrderFlow.Payments.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>
