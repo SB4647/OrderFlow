@@ -1,8 +1,11 @@
+using OrderFlow.Contracts;
 using OrderFlow.Orders.Domain;
 
 namespace OrderFlow.Orders.Application;
 
-public sealed class OrdersService(IOrdersRepository ordersRepository) : IOrdersService
+public sealed class OrdersService(
+    IOrdersRepository ordersRepository,
+    IOrderSubmittedPublisher orderSubmittedPublisher) : IOrdersService
 {
     public async Task<OrderResponse> CreateAsync(CreateOrderCommand command, CancellationToken cancellationToken)
     {
@@ -22,6 +25,13 @@ public sealed class OrdersService(IOrdersRepository ordersRepository) : IOrdersS
 
         ordersRepository.Add(order);
         await ordersRepository.SaveChangesAsync(cancellationToken);
+        await orderSubmittedPublisher.PublishAsync(
+            new OrderSubmitted(
+                Guid.NewGuid(),
+                DateTimeOffset.UtcNow,
+                order.Id,
+                order.Items.Select(item => new OrderLine(item.Sku, item.Quantity)).ToArray()),
+            cancellationToken);
 
         return Map(order);
     }

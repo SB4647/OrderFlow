@@ -23,6 +23,7 @@
     <Project Path="src/Services/Payments/OrderFlow.Payments.Worker/OrderFlow.Payments.Worker.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests/OrderFlow.Inventory.UnitTests/OrderFlow.Inventory.UnitTests.csproj" />
     <Project Path="tests/OrderFlow.Orders.IntegrationTests/OrderFlow.Orders.IntegrationTests.csproj" />
     <Project Path="tests/OrderFlow.Orders.UnitTests/OrderFlow.Orders.UnitTests.csproj" />
   </Folder>

@@ -17,6 +17,9 @@ services:
 
   rabbitmq:
     image: rabbitmq:4-management
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER:?Set RABBITMQ_USER in .env}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:?Set RABBITMQ_PASSWORD in .env}
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -27,6 +30,48 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+
+  orders-api:
+    build:
+      context: .
+      dockerfile: src/Services/Orders/OrderFlow.Orders.Api/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__Orders: Host=postgres;Port=5432;Database=orderflow_orders;Username=${POSTGRES_USER:-orderflow};Password=${POSTGRES_PASSWORD}
+      RabbitMq__Host: rabbitmq
+      RabbitMq__Username: ${RABBITMQ_USER}
+      RabbitMq__Password: ${RABBITMQ_PASSWORD}
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  inventory-worker:
+    build:
+      context: .
+      dockerfile: src/Services/Inventory/OrderFlow.Inventory.Worker/Dockerfile
+    environment:
+      ConnectionStrings__Inventory: Host=postgres;Port=5432;Database=orderflow_inventory;Username=${POSTGRES_USER:-orderflow};Password=${POSTGRES_PASSWORD}
+      RabbitMq__Host: rabbitmq
+      RabbitMq__Username: ${RABBITMQ_USER}
+      RabbitMq__Password: ${RABBITMQ_PASSWORD}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  payments-worker:
+    build:
+      context: .
+      dockerfile: src/Services/Payments/OrderFlow.Payments.Worker/Dockerfile
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
 
 volumes:
   postgres-data:

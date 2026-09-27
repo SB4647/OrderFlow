@@ -1,0 +1,8 @@
+.git
+.vs
+.codex
+.env
+AGENTS.md
+docs/BUILD_BRIEF.md
+**/bin
+**/obj
