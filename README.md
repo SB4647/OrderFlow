@@ -4,13 +4,7 @@ A local distributed order-processing MVP built with .NET 10, React, PostgreSQL, 
 
 ## Architecture
 
-```text
-React / Vite → Orders API → OrderSubmitted → Inventory Worker
-                                              ↓ InventoryReserved
-                                        Payments Worker
-                                              ↓ PaymentSucceeded or PaymentFailed
-                                         Orders API updates final status
-```
+![OrderFlow system architecture and order-processing flow](docs/images/orderflow-system-diagram.png)
 
 Each service owns its own logical PostgreSQL database. Services communicate through immutable RabbitMQ integration events; they never access another service's database.
 

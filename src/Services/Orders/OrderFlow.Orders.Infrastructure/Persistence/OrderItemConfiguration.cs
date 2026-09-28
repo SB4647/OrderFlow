@@ -12,7 +12,7 @@ internal sealed class OrderItemConfiguration : IEntityTypeConfiguration<OrderIte
         builder.HasKey(item => item.Id);
 
         builder.Property(item => item.Sku)
-            .HasMaxLength(64)
+            .HasMaxLength(maxLength: 64)
             .IsRequired();
         builder.Property(item => item.Quantity)
             .IsRequired();

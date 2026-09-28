@@ -17,6 +17,7 @@
     <Project Path="src/Services/Orders/OrderFlow.Orders.Infrastructure/OrderFlow.Orders.Infrastructure.csproj" />
   </Folder>
   <Folder Name="/src/Services/Payments/">
+    <File Path="src/Services/Orders/OrderFlow.Orders.Infrastructure/Persistence/ProcessedMessageConfiguration.cs" />
     <Project Path="src/Services/Payments/OrderFlow.Payments.Application/OrderFlow.Payments.Application.csproj" />
     <Project Path="src/Services/Payments/OrderFlow.Payments.Domain/OrderFlow.Payments.Domain.csproj" />
     <Project Path="src/Services/Payments/OrderFlow.Payments.Infrastructure/OrderFlow.Payments.Infrastructure.csproj" />
