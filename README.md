@@ -8,6 +8,12 @@ A local distributed order-processing MVP built with .NET 10, React, PostgreSQL, 
 
 Each service owns its own logical PostgreSQL database. Services communicate through immutable RabbitMQ integration events; they never access another service's database.
 
+## UI walkthrough
+
+The dashboard refreshes order progress automatically. This example shows the two final outcomes: a payment below $500 is confirmed, while a $500 order is cancelled.
+
+![OrderFlow dashboard showing confirmed and cancelled orders](docs/images/orderflow-order-outcomes.png)
+
 ## Run locally
 
 Prerequisites: .NET 10 SDK, Node.js 24+, and Docker Desktop with the Linux engine running.
